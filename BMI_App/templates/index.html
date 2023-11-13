@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            padding: 8px;
+            margin: 8px;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #result {
+            font-weight: bold;
+            color: #333;
+        }
+
+        #bmiSlider {
+            width: 60%;
+            margin: 20px auto;
+        }
+
+        #bmiSlider::-webkit-slider-thumb {
+            background: #3498db;
+        }
+
+        #bmiSlider::-moz-range-thumb {
+            background: #3498db;
+        }
+
+        #bmiSlider::-ms-thumb {
+            background: #3498db;
+        }
+
+        #bmiSlider::-webkit-slider-runnable-track {
+            background: linear-gradient(to right,#f39c12, #2ecc71, #e74c3c);
+        }
+
+        #bmiSlider::-moz-range-track {
+            background: linear-gradient(to right, #f39c12, #2ecc71, #e74c3c);
+        }
+
+        #bmiSlider::-ms-track {
+            background: linear-gradient(to right, #f39c12, #2ecc71, #e74c3c);
+        }
+
+        #bmiValue {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+         /* Define styles for different classes */
+         .normal { color: #2ecc71; } /* Green */
+         .thinness { color: #f39c12; } /* Yellow */
+         .overweight { color: #e74c3c; } /* Red */
+
+         #bmiResult {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>BMI Calculator</h2>
+
+    <form id="bmiForm" action="/" method="post">
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required>
+        <br>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight" required>
+        <br>
+
+        <button type="submit">Calculate BMI</button>
+        <br>
+        <div>
+    </form>
+        <div id="bmiResult">
+            <input type="range" id="bmiSlider" min="15" max="40" step="0.1" value="22" oninput="updateBMI()">
+            <div id="bmiValue">BMI: <span id="bmiDisplay">{{output1}}</span>(<span id="bmiType">{{output_2}}</span>)</div>
+        </div>
+            <script>
+                function updateBMI() {
+                    var slider = document.getElementById("bmiSlider");
+                    var display = document.getElementById("bmiDisplay");
+                    display.innerText = slider.value;
+                    var resultType = document.getElementById("bmiResult");
+                    resultType.style.display = "block";
+                }
+        
+                // Function to set the slider value based on the dynamically calculated BMI
+                function setSliderValue() {
+                    var slider = document.getElementById("bmiSlider");
+                    var calculatedBMI = parseFloat(document.getElementById("bmiDisplay").innerText);
+                    
+                    if (!isNaN(calculatedBMI)) {
+                        slider.value = calculatedBMI;
+                        updateBMI();  // Update the displayed BMI value
+                    }
+                }
+
+                function setBMITypeClass() {
+                    var bmiTypeElement = document.getElementById("bmiType");
+                    var bmiType = document.getElementById("bmiType").innerText;
+                    // Remove existing classes
+                    bmiTypeElement.classList.remove("normal", "overweight", "thinness");
+        
+                    // Add the appropriate class based on the BMI type
+                    if (bmiType === "Normal") {
+                        bmiTypeElement.classList.add("normal");
+                    } else if (bmiType === "Overweight") {
+                        bmiTypeElement.classList.add("overweight");
+                    } else if (bmiType === "Thinness") {
+                        bmiTypeElement.classList.add("thinness");
+                    }
+                    
+                }
+                
+        
+                // Example: Set the slider value based on the dynamically calculated BMI
+                setSliderValue();
+                setBMITypeClass();
+            </script>
+        
+    </body>
+</html>
