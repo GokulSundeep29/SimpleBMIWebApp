@@ -7,6 +7,7 @@ def convert_cm_to_m(h):
     return h/100
 
 def bmi_classification(bmi):
+    # Classify BMI score into types
     if bmi < 18.5:
         return 'Thinness'
     elif bmi >= 18.5 and bmi <= 25:
